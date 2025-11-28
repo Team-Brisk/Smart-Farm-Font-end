@@ -37,7 +37,7 @@ const SmartFarmDashboard = () => {
       if (data.topic === "/smartfarm/v2/device_health") {
         setDeviceData(data.message);
       } 
-      else if (data.topic === "/smartfarm/v2/plot_data") {
+      else if (data.topic === "/smartfarm_Auto/v2/plot_data") {
         setPlotData(data.message);
       }
     });
@@ -291,15 +291,15 @@ const SmartFarmDashboard = () => {
                       <Text type="secondary">Water Level</Text>
                       <Title level={2} style={{ margin: 0, color: COLORS.primary }}>
                         {
-                          plotData?.water_level_percent_1
-                          ?plotData.water_level_percent_1.toFixed(1)
+                          plotData?.water_level_percent
+                          ?plotData.water_level_percent.toFixed(1)
                         : "รอข้อมูล"}%
                       </Title>
                       <Text type="secondary">Water Volume</Text>
                       <Title level={2} style={{ margin: 0, color: '#1890ff' }}>
                         {
-                          plotData?.water_volume_ml_1
-                          ?plotData.water_volume_ml_1.toFixed(1)
+                          plotData?.water_level_percent
+                          ?plotData.water_level_percent.toFixed(1)
                         : "รอข้อมูล"} ML
                       </Title>
                     </Space>
@@ -307,8 +307,8 @@ const SmartFarmDashboard = () => {
                   <Col>
                     <Progress
                       type="circle"
-                      percent={plotData?.water_level_percent_1
-                          ?plotData.water_level_percent_1.toFixed(1)
+                      percent={plotData?.water_level_percent
+                          ?plotData.water_level_percent.toFixed(2)
                         : "รอข้อมูล"}
                       strokeColor={{
                         '0%': '#4facfe',
