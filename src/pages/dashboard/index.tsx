@@ -98,25 +98,16 @@ const DashboardList = () => {
       dataIndex: 'time',
       sorter: (a, b) => a.time.localeCompare(b.time),
       width: 220,
-      render: text => <span style={{ color: '#888' }}>{text}</span>, // สีเทาสำหรับวันที่
+      render: text => <span style={{ color: '#000000ff' }}>{text}</span>, // สีเทาสำหรับวันที่
     },
     {
       title: 'Title',
       dataIndex: 'title',
-      render: (text, record) => (
-        <Space>
-          {/* ไอคอนหน้าชื่อ เพื่อความสวยงาม */}
-          <div style={{ backgroundColor: '#e6f7ff', padding: '5px', borderRadius: '4px' }}>
-            <FileTextOutlined style={{ color: '#1890ff' }} />
-          </div>
-          <a
-            onClick={() => handleDashboardClick(record)}
-            style={{ color: '#1890ff', fontWeight: 600, fontSize: '15px' }}
-          >
-            {text}
-          </a>
-        </Space>
-      ),
+          sorter: (a, b) => a.time.localeCompare(b.time),
+          
+         width: 220,
+      render: text => <span style={{ color: '#000000ff' }}>{text}</span>, // สีเทาสำหรับวันที่
+     
     },
     {
       title: 'Assigned to customers',
@@ -300,17 +291,20 @@ const DashboardList = () => {
 
       <Spin spinning={loading} style={{ backgroundColor: "#fff" }}>
         <div style={{ background: '#fff', padding: '24px', borderRadius: '0px 0px 8px 8px' }}>
-          <Table
-            rowSelection={{ type: 'checkbox', ...rowSelection }}
-            columns={columns}
-            dataSource={mockData}
-            pagination={{
-              pageSize: 5,
-              showSizeChanger: true,
-              showTotal: total => `Total ${total} items`,
-            }}
-            className="custom-table"
-          />
+         <Table
+  rowSelection={{ type: 'checkbox', ...rowSelection }}
+  columns={columns}
+  dataSource={mockData}
+  pagination={{
+    pageSize: 5,
+    showSizeChanger: true,
+    showTotal: total => `Total ${total} items`,
+  }}
+  className="custom-table"
+  onRow={(record) => ({
+    onClick: () => handleDashboardClick(record),
+  })}
+/>
         </div>
       </Spin>
 
