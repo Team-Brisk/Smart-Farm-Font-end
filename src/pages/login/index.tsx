@@ -3,19 +3,19 @@ import type { FC } from 'react';
 
 import './index.less';
 
-import { Button, Checkbox, Form, Input, theme as antTheme } from 'antd';
+import { Button, Checkbox, Form, Input, theme as antTheme, Card, Typography } from 'antd';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { LocaleFormatter, useLocale } from '@/locales';
 import { formatSearch } from '@/utils/formatSearch';
-
 import { loginAsync } from '../../stores/user.action';
 
+const { Title, Text } = Typography;
+
 const initialValues: LoginParams = {
-  username: 'guest',
-  password: 'guest',
-  // remember: true
+  username: '',
+  password: '',
 };
 
 const LoginForm: FC = () => {
@@ -31,61 +31,83 @@ const LoginForm: FC = () => {
     if (!!res) {
       const search = formatSearch(location.search);
       const from = search.from || { pathname: '/' };
-
       navigate(from);
     }
   };
 
   return (
-    <div className="login-page" style={{ backgroundColor: token.colorBgContainer }}>
-      <Form<LoginParams> onFinish={onFinished} className="login-page-form" initialValues={initialValues}>
-        <h2>REACT ANTD ADMIN</h2>
-        <Form.Item
-          name="username"
-          rules={[
-            {
-              required: true,
-              message: formatMessage({
-                id: 'gloabal.tips.enterUsernameMessage',
-              }),
-            },
-          ]}
-        >
-          <Input
-            placeholder={formatMessage({
-              id: 'gloabal.tips.username',
-            })}
-          />
-        </Form.Item>
-        <Form.Item
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: formatMessage({
-                id: 'gloabal.tips.enterPasswordMessage',
-              }),
-            },
-          ]}
-        >
-          <Input
-            type="password"
-            placeholder={formatMessage({
-              id: 'gloabal.tips.password',
-            })}
-          />
-        </Form.Item>
-        <Form.Item name="remember" valuePropName="checked">
-          <Checkbox>
-            <LocaleFormatter id="gloabal.tips.rememberUser" />
-          </Checkbox>
-        </Form.Item>
-        <Form.Item>
-          <Button htmlType="submit" type="primary" className="login-page-form_button">
-            <LocaleFormatter id="gloabal.tips.login" />
-          </Button>
-        </Form.Item>
-      </Form>
+    <div
+      className="login-page"
+      style={{
+        backgroundColor: token.colorBgLayout,
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 20,
+      }}
+    >
+      <Card
+        style={{
+          width: 420,
+          padding: '20px 30px',
+          borderRadius: 12,
+          boxShadow: '0 4px 18px rgba(0,0,0,0.08)',
+        }}
+      >
+        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+          <Title level={2} style={{ marginBottom: 8 }}>
+            SIGN IN 
+          </Title>
+          <Text type="secondary">Please sign in </Text>
+        </div>
+
+        <Form<LoginParams> layout="vertical" onFinish={onFinished} initialValues={initialValues}>
+          <Form.Item
+            label="Username"
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: formatMessage({ id: 'gloabal.tips.enterUsernameMessage' }),
+              },
+            ]}
+          >
+            <Input placeholder="Enter your username" size="large" />
+          </Form.Item>
+
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: formatMessage({ id: 'gloabal.tips.enterPasswordMessage' }),
+              },
+            ]}
+          >
+            <Input.Password placeholder="Enter your password" size="large" />
+          </Form.Item>
+
+          <Form.Item name="remember" valuePropName="checked">
+            <Checkbox>
+              <LocaleFormatter id="gloabal.tips.rememberUser" />
+            </Checkbox>
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              htmlType="submit"
+              type="primary"
+              size="large"
+              block
+              className="login-page-form_button"
+            >
+              <LocaleFormatter id="gloabal.tips.login" />
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
     </div>
   );
 };
