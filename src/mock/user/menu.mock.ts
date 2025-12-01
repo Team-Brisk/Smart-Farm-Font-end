@@ -14,14 +14,16 @@ const mockMenuList: MenuList = [
   },
    
  
+  
+  
   {
-    code: 'Devices',
+    code: 'Reports',
     label: {
     
-      en_US: 'Devices',
+      en_US: 'Reports',
     },
-    icon: 'devices',
-    path: '/devices',
+    icon: 'Reports',
+    path: '/reports',
   },
    {
     code: 'RuleChain',
