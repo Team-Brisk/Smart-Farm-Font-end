@@ -14,6 +14,7 @@ import WrapperRouteComponent from './config';
 const NotFound = lazy(() => import(/* webpackChunkName: "404'"*/ '@/pages/404'));
 const RuleChain = lazy(() => import(/* webpackChunkName: "404'"*/ '@/pages/rulechain'));
 const Devices = lazy(() => import(/* webpackChunkName: "guide'"*/ '@/pages/devices'));
+const Reports = lazy(() => import(/* webpackChunkName: "guide'"*/ '@/pages/reports'));
 const SmartDash1 = lazy(() => import(/* webpackChunkName: "guide'"*/ '@/pages/dashboard/SmartFarmDashboard'));
 const RoutePermission = lazy(() => import(/* webpackChunkName: "route-permission"*/ '@/pages/permission/route'));
 const FormPage = lazy(() => import(/* webpackChunkName: "form'"*/ '@/pages/components/form'));
@@ -55,9 +56,10 @@ const routeList: RouteObject[] = [
         path: 'rulechain',
         element: <WrapperRouteComponent element={<RuleChain />} titleId="title.RuleChain" />,
       },
+     
       {
-        path: 'devices',
-        element: <WrapperRouteComponent element={<Devices />} titleId="title.Devices" />,
+        path: 'reports',
+        element: <WrapperRouteComponent element={<Reports />} titleId="title.Devices" />,
       },
       {
         path: 'permission/route',

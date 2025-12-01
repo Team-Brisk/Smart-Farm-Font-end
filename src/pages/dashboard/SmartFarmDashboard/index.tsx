@@ -49,11 +49,11 @@ const SmartFarmDashboard = () => {
     };
   }, []);
 
-  const getStatusColor = (value, thresholds) => {
-    if (value < thresholds.good) return '#52c41a';
-    if (value < thresholds.warning) return '#faad14';
-    return '#ff4d4f';
-  };
+  // const getStatusColor = (value, thresholds) => {
+  //   if (value < thresholds.good) return '#52c41a';
+  //   if (value < thresholds.warning) return '#faad14';
+  //   return '#ff4d4f';
+  // };
 
   const getCpuStatus = (cpu) => {
     if (cpu < 60) return { text: 'Optimal', color: '#52c41a' };
