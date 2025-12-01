@@ -48,7 +48,6 @@ const DashboardList = () => {
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isImportModalOpen, setImportModalOpen] = useState(false)
   const [loading, setLoading] = useState(false);
-  // const { loading } = useSelector(state => state.global);
 
   // Ant
   const { Dragger } = Upload
