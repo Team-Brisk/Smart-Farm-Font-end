@@ -12,6 +12,7 @@ interface MenuItem {
   path: string;
   
   children?: MenuItem[];
+  role?:string
 }
 
 export type MenuChild = Omit<MenuItem, 'children'>;

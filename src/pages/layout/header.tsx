@@ -19,7 +19,7 @@ import { setGlobalState } from '@/stores/global.store';
 import { setUserItem } from '@/stores/user.store';
 import auto from '@/assets/logo/auto.gif';
 
-import { logoutAsync } from '../../stores/user.action';
+import { loginAsync } from '../../stores/user.action';
 import HeaderNoticeComponent from './notice';
 
 const { Header } = Layout;
@@ -46,9 +46,9 @@ const HeaderComponent: FC<HeaderProps> = ({ collapsed, toggle }) => {
       case 'userSetting':
         return;
       case 'logout':
-        const res = Boolean(await dispatch(logoutAsync()));
+        // const res = Boolean(await dispatch(logoutAsync()));
 
-        res && navigate('/login');
+        // res && navigate('/login');
 
         return;
     }

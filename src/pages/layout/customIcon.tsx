@@ -8,7 +8,7 @@ import { ReactComponent as PermissionSvg } from '@/assets/menu/permission.svg';
 import { ReactComponent as Device } from '@/assets/menu/devices.svg';
 import { ReactComponent as Reports } from '@/assets/menu/reports.svg';
 import { ReactComponent as Component } from '@/assets/menu/component.svg';
-
+import { ReactComponent as Users } from '@/assets/menu/user.svg';
 interface CustomIconProps {
   type: string;
 }
@@ -27,6 +27,9 @@ export const CustomIcon: FC<CustomIconProps> = props => {
     com = <Component />;
   } else if (type === 'documentation') {
     com = <DocumentationSvg />;
+
+      } else if (type === 'Users') {
+    com = <Users />;
   } else {
     com = <GuideSvg />;
   }

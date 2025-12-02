@@ -1,46 +1,19 @@
-import type { LoginParams } from '../interface/user/login';
-import type { Dispatch } from '@reduxjs/toolkit';
+import { loginApi } from "@/api/auth";
 
-import { apiLogin, apiLogout } from '../api/user.api';
-import { setUserItem } from './user.store';
-import { createAsyncAction } from './utils';
-// typed wrapper async thunk function demo, no extra feature, just for powerful typings
-export const loginAsync = createAsyncAction<LoginParams, boolean>(payload => {
-  return async dispatch => {
-    const { result, status } = await apiLogin(payload);
+export const loginAsync = (payload: any) => async (dispatch: any) => {
+  const { ok, data } = await loginApi(payload);
 
-    if (status) {
-      localStorage.setItem('t', result.token);
-      localStorage.setItem('username', result.username);
-      dispatch(
-        setUserItem({
-          logged: true,
-          username: result.username,
-        }),
-      );
+  if (!ok) {
+    alert(data.message);
+    return null;
+  }
 
-      return true;
-    }
+  localStorage.setItem("token", data.token);
 
-    return false;
-  };
-});
+  dispatch({
+    type: "LOGIN_SUCCESS",
+    payload: data.user,
+  });
 
-export const logoutAsync = () => {
-  return async (dispatch: Dispatch) => {
-    const { status } = await apiLogout({ token: localStorage.getItem('t')! });
-
-    if (status) {
-      localStorage.clear();
-      dispatch(
-        setUserItem({
-          logged: false,
-        }),
-      );
-
-      return true;
-    }
-
-    return false;
-  };
+  return data;
 };

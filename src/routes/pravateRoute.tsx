@@ -1,36 +1,18 @@
-import type { FC } from 'react';
-import type { RouteProps } from 'react-router';
+import { FC } from 'react';
+import { Navigate } from 'react-router-dom';
 
-import { Button, Result } from 'antd';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router';
-import { useNavigate } from 'react-router-dom';
+interface ProtectedRouteProps {
+  element: JSX.Element;
+}
 
-import { useLocale } from '@/locales';
+const ProtectedRoute: FC<ProtectedRouteProps> = ({ element }) => {
+  const token = localStorage.getItem('token'); // หรือจาก Redux, Context
 
-const PrivateRoute: FC<RouteProps> = props => {
-  const { logged } = useSelector(state => state.user);
-  const navigate = useNavigate();
-  const { formatMessage } = useLocale();
-  const location = useLocation();
+  if (!token) {
+    return <Navigate to="/login" replace />; // ถ้าไม่ login → redirect ไป login
+  }
 
-  return logged ? (
-    (props.element as React.ReactElement)
-  ) : (
-    <Result
-      status="403"
-      title="403"
-      subTitle={formatMessage({ id: 'gloabal.tips.unauthorized' })}
-      extra={
-        <Button
-          type="primary"
-          onClick={() => navigate(`/login${'?from=' + encodeURIComponent(location.pathname)}`, { replace: true })}
-        >
-          {formatMessage({ id: 'gloabal.tips.goToLogin' })}
-        </Button>
-      }
-    />
-  );
+  return element;
 };
 
-export default PrivateRoute;
+export default ProtectedRoute;

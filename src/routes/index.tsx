@@ -10,35 +10,54 @@ import LayoutPage from '@/pages/layout';
 import LoginPage from '@/pages/login';
 
 import WrapperRouteComponent from './config';
+import UserPage from '@/pages/Management';
 
-const NotFound = lazy(() => import(/* webpackChunkName: "404'"*/ '@/pages/404'));
-const RuleChain = lazy(() => import(/* webpackChunkName: "404'"*/ '@/pages/rulechain'));
-const Devices = lazy(() => import(/* webpackChunkName: "guide'"*/ '@/pages/devices'));
-const Reports = lazy(() => import(/* webpackChunkName: "guide'"*/ '@/pages/reports'));
-const SmartDash1 = lazy(() => import(/* webpackChunkName: "guide'"*/ '@/pages/dashboard/SmartFarmDashboard'));
-const RoutePermission = lazy(() => import(/* webpackChunkName: "route-permission"*/ '@/pages/permission/route'));
-const FormPage = lazy(() => import(/* webpackChunkName: "form'"*/ '@/pages/components/form'));
-const TablePage = lazy(() => import(/* webpackChunkName: "table'"*/ '@/pages/components/table'));
-const SearchPage = lazy(() => import(/* webpackChunkName: "search'"*/ '@/pages/components/search'));
-const TabsPage = lazy(() => import(/* webpackChunkName: "tabs'"*/ '@/pages/components/tabs'));
-const AsidePage = lazy(() => import(/* webpackChunkName: "aside'"*/ '@/pages/components/aside'));
-const RadioCardsPage = lazy(() => import(/* webpackChunkName: "radio-cards'"*/ '@/pages/components/radio-cards'));
-const BusinessBasicPage = lazy(() => import(/* webpackChunkName: "basic-page" */ '@/pages/business/basic'));
-const BusinessWithSearchPage = lazy(() => import(/* webpackChunkName: "with-search" */ '@/pages/business/with-search'));
-const BusinessWithAsidePage = lazy(() => import(/* webpackChunkName: "with-aside" */ '@/pages/business/with-aside'));
-const BusinessWithRadioCardsPage = lazy(
-  () => import(/* webpackChunkName: "with-aside" */ '@/pages/business/with-radio-cards'),
-);
-const BusinessWithTabsPage = lazy(() => import(/* webpackChunkName: "with-tabs" */ '@/pages/business/with-tabs'));
+const NotFound = lazy(() => import('@/pages/404'));
+const RuleChain = lazy(() => import('@/pages/rulechain'));
+const Devices = lazy(() => import('@/pages/devices'));
+const Reports = lazy(() => import('@/pages/reports'));
+const SmartDash1 = lazy(() => import('@/pages/dashboard/SmartFarmDashboard'));
+const RoutePermission = lazy(() => import('@/pages/permission/route'));
+const FormPage = lazy(() => import('@/pages/components/form'));
+const TablePage = lazy(() => import('@/pages/components/table'));
+const SearchPage = lazy(() => import('@/pages/components/search'));
+const TabsPage = lazy(() => import('@/pages/components/tabs'));
+const AsidePage = lazy(() => import('@/pages/components/aside'));
+const RadioCardsPage = lazy(() => import('@/pages/components/radio-cards'));
+const BusinessBasicPage = lazy(() => import('@/pages/business/basic'));
+const BusinessWithSearchPage = lazy(() => import('@/pages/business/with-search'));
+const BusinessWithAsidePage = lazy(() => import('@/pages/business/with-aside'));
+const BusinessWithRadioCardsPage = lazy(() => import('@/pages/business/with-radio-cards'));
+const BusinessWithTabsPage = lazy(() => import('@/pages/business/with-tabs'));
 
+// -------------------------
+// Route Guard
+// -------------------------
+const PrivateRoute = ({ element }: { element: JSX.Element }) => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+  return element;
+};
+
+// -------------------------
+// Routes
+// -------------------------
 const routeList: RouteObject[] = [
+  {
+    path: '/',
+    element: <Navigate to="/login" replace />, // 👉 เข้าเว็บจะไป login ก่อน
+  },
   {
     path: '/login',
     element: <WrapperRouteComponent element={<LoginPage />} titleId="title.login" />,
   },
   {
-    path: '/',
-    element: <WrapperRouteComponent element={<LayoutPage />} titleId="" />,
+    path: '/', // ใช้ path อื่นเพื่อป้องกันชนกับ redirect
+    element: (
+      <PrivateRoute element={<WrapperRouteComponent element={<LayoutPage />} titleId="" />} />
+    ),
     children: [
       {
         path: '',
@@ -48,7 +67,7 @@ const routeList: RouteObject[] = [
         path: 'dashboard',
         element: <WrapperRouteComponent element={<Dashboard />} titleId="title.dashboard" />,
       },
-       {
+      {
         path: 'dashboard/SmartFarmDashboard',
         element: <WrapperRouteComponent element={<SmartDash1 />} titleId="title.dashboard" />,
       },
@@ -56,14 +75,23 @@ const routeList: RouteObject[] = [
         path: 'rulechain',
         element: <WrapperRouteComponent element={<RuleChain />} titleId="title.RuleChain" />,
       },
-     
+      {
+        path: 'devices',
+        element: <WrapperRouteComponent element={<Devices />} titleId="title.Devices" />,
+      },
       {
         path: 'reports',
-        element: <WrapperRouteComponent element={<Reports />} titleId="title.Devices" />,
+        element: <WrapperRouteComponent element={<Reports />} titleId="title.Reports" />,
+      },
+      {
+        path: 'users',
+  element: <WrapperRouteComponent element={<UserPage />} titleId="title.Users" />,  
       },
       {
         path: 'permission/route',
-        element: <WrapperRouteComponent element={<RoutePermission />} titleId="title.permission.route" auth />,
+        element: (
+          <WrapperRouteComponent element={<RoutePermission />} titleId="title.permission.route" />
+        ),
       },
       {
         path: 'component/form',
@@ -95,15 +123,27 @@ const routeList: RouteObject[] = [
       },
       {
         path: 'business/with-search',
-        element: <WrapperRouteComponent element={<BusinessWithSearchPage />} titleId="title.account" />,
+        element: (
+          <WrapperRouteComponent
+            element={<BusinessWithSearchPage />}
+            titleId="title.account"
+          />
+        ),
       },
       {
         path: 'business/with-aside',
-        element: <WrapperRouteComponent element={<BusinessWithAsidePage />} titleId="title.account" />,
+        element: (
+          <WrapperRouteComponent element={<BusinessWithAsidePage />} titleId="title.account" />
+        ),
       },
       {
         path: 'business/with-radio-cards',
-        element: <WrapperRouteComponent element={<BusinessWithRadioCardsPage />} titleId="title.account" />,
+        element: (
+          <WrapperRouteComponent
+            element={<BusinessWithRadioCardsPage />}
+            titleId="title.account"
+          />
+        ),
       },
       {
         path: 'business/with-tabs',
@@ -113,13 +153,14 @@ const routeList: RouteObject[] = [
         path: '*',
         element: <WrapperRouteComponent element={<NotFound />} titleId="title.notFount" />,
       },
+      
+      
     ],
   },
 ];
 
 const RenderRouter: FC = () => {
   const element = useRoutes(routeList);
-
   return element;
 };
 
