@@ -7,9 +7,7 @@ import { Button, Checkbox, Form, Input, theme as antTheme, Card, Typography } fr
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { LocaleFormatter, useLocale } from '@/locales';
-import { formatSearch } from '@/utils/formatSearch';
-import { loginAsync } from '../../stores/user.action';
+import { loginAsync } from '@/stores/user.action';
 
 const { Title, Text } = Typography;
 
@@ -22,17 +20,19 @@ const LoginForm: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { formatMessage } = useLocale();
   const { token } = antTheme.useToken();
 
   const onFinished = async (form: LoginParams) => {
-    const res = dispatch(await loginAsync(form));
+    const res = await dispatch<any>(loginAsync(form));
 
-    if (!!res) {
-      const search = formatSearch(location.search);
-      const from = search.from || { pathname: '/' };
-      navigate(from);
-    }
+if (!!res) {
+  localStorage.setItem("token", res.token);
+  localStorage.setItem("user", JSON.stringify(res.user));
+  
+console.log(localStorage)
+  navigate("/dashboard", { replace: true });
+}
+
   };
 
   return (
@@ -59,7 +59,7 @@ const LoginForm: FC = () => {
           <Title level={2} style={{ marginBottom: 8 }}>
             SIGN IN 
           </Title>
-          <Text type="secondary">Please sign in </Text>
+          <Text type="secondary">Please sign in</Text>
         </div>
 
         <Form<LoginParams> layout="vertical" onFinish={onFinished} initialValues={initialValues}>
@@ -69,7 +69,7 @@ const LoginForm: FC = () => {
             rules={[
               {
                 required: true,
-                message: formatMessage({ id: 'gloabal.tips.enterUsernameMessage' }),
+                message: 'Please enter username',
               },
             ]}
           >
@@ -82,7 +82,7 @@ const LoginForm: FC = () => {
             rules={[
               {
                 required: true,
-                message: formatMessage({ id: 'gloabal.tips.enterPasswordMessage' }),
+                message: 'Please enter password',
               },
             ]}
           >
@@ -90,9 +90,7 @@ const LoginForm: FC = () => {
           </Form.Item>
 
           <Form.Item name="remember" valuePropName="checked">
-            <Checkbox>
-              <LocaleFormatter id="gloabal.tips.rememberUser" />
-            </Checkbox>
+            <Checkbox>Remember me</Checkbox>
           </Form.Item>
 
           <Form.Item>
@@ -103,7 +101,7 @@ const LoginForm: FC = () => {
               block
               className="login-page-form_button"
             >
-              <LocaleFormatter id="gloabal.tips.login" />
+              Sign In
             </Button>
           </Form.Item>
         </Form>

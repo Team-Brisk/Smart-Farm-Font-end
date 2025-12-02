@@ -1,6 +1,12 @@
 import type { MenuList } from '@/interface/layout/menu.interface';
 
 import { intercepter, mock } from '../config';
+import { loginApi } from '@/api/auth';
+const storedRole = localStorage.getItem('role');
+const userRole = storedRole || ''; // ใช้ string เปล่าแทน null
+
+
+
 
 const mockMenuList: MenuList = [
   {
@@ -24,6 +30,7 @@ const mockMenuList: MenuList = [
     },
     icon: 'Reports',
     path: '/reports',
+    role: userRole
   },
    {
     code: 'RuleChain',
@@ -33,6 +40,15 @@ const mockMenuList: MenuList = [
     },
     icon: 'guide',
     path: '/rulechain',
+  },
+    {
+    code: 'Users',
+    label: {
+      
+      en_US: 'Users',
+    },
+    icon: 'Users',
+    path: '/users',
   },
    {
     code: 'component',
@@ -91,6 +107,7 @@ const mockMenuList: MenuList = [
         },
         path: '/component/radio-cards',
       },
+    
     ],
   },
 ];
