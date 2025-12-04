@@ -84,6 +84,14 @@ const mockMenuList: MenuList = [
         path: '/component/tabs',
       },
       {
+        code: 'componentTabs',
+        label: {
+         
+          en_US: 'DatePicker',
+        },
+        path: '/component/datePicker',
+      },
+      {
         code: 'componentRadioCards',
         label: {
          

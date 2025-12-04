@@ -21,6 +21,7 @@ const FormPage = lazy(() => import(/* webpackChunkName: "form'"*/ '@/pages/compo
 const TablePage = lazy(() => import(/* webpackChunkName: "table'"*/ '@/pages/components/table'));
 const SearchPage = lazy(() => import(/* webpackChunkName: "search'"*/ '@/pages/components/search'));
 const TabsPage = lazy(() => import(/* webpackChunkName: "tabs'"*/ '@/pages/components/tabs'));
+const DatePickerPage = lazy(() => import(/* webpackChunkName: "tabs'"*/ '@/pages/components/datePicker'));
 const AsidePage = lazy(() => import(/* webpackChunkName: "aside'"*/ '@/pages/components/aside'));
 const RadioCardsPage = lazy(() => import(/* webpackChunkName: "radio-cards'"*/ '@/pages/components/radio-cards'));
 const BusinessBasicPage = lazy(() => import(/* webpackChunkName: "basic-page" */ '@/pages/business/basic'));
@@ -80,6 +81,10 @@ const routeList: RouteObject[] = [
       {
         path: 'component/tabs',
         element: <WrapperRouteComponent element={<TabsPage />} titleId="title.account" />,
+      },
+      {
+        path: 'component/datePicker',
+        element: <WrapperRouteComponent element={<DatePickerPage />} titleId="title.account" />,
       },
       {
         path: 'component/aside',
