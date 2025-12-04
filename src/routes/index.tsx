@@ -110,6 +110,10 @@ const routeList: RouteObject[] = [
         element: <WrapperRouteComponent element={<TabsPage />} titleId="title.account" />,
       },
       {
+        path: 'component/datePicker',
+        element: <WrapperRouteComponent element={<DatePickerPage />} titleId="title.account" />,
+      },
+      {
         path: 'component/aside',
         element: <WrapperRouteComponent element={<AsidePage />} titleId="title.account" />,
       },
