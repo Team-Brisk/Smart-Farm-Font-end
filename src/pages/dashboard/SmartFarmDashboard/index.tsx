@@ -34,7 +34,7 @@ const SmartFarmDashboard = () => {
     // รับข้อมูลแบบมี Type กำกับ
     socket.on("mqtt_feed", (data: MqttPayload) => {
       
-      if (data.topic === "/smartfarm/v2/device_health") {
+      if (data.topic === "/smartfarm_Auto/v2/plot_data") {
         setDeviceData(data.message);
       } 
       else if (data.topic === "/smartfarm_Auto/v2/plot_data") {
@@ -48,12 +48,16 @@ const SmartFarmDashboard = () => {
       socket.off("mqtt_feed");
     };
   }, []);
-
-  // const getStatusColor = (value, thresholds) => {
-  //   if (value < thresholds.good) return '#52c41a';
-  //   if (value < thresholds.warning) return '#faad14';
-  //   return '#ff4d4f';
-  // };
+  type Thresholds = {
+  good: number;
+  warning: number;
+};
+const getStatusColor = (value: number, thresholds: Thresholds): string => {
+  if (value < thresholds.good) return '#52c41a';   // green
+  if (value < thresholds.warning) return '#faad14'; // yellow
+  return '#ff4d4f';                                 // red
+};
+  
 
   const getCpuStatus = (cpu) => {
     if (cpu < 60) return { text: 'Optimal', color: '#52c41a' };
@@ -155,8 +159,8 @@ const SmartFarmDashboard = () => {
                   >
                     <Statistic
                       title={<Text strong style={{ fontSize: '14px' }}>CPU Usage</Text>}
-                      value={ deviceData?.cpu_percent
-                        ?deviceData.cpu_percent.toFixed(1)
+                      value={ deviceData?.temperature
+                        ?deviceData.temperature.toFixed(1)
                         : "รอข้อมูล"}
                       suffix="%"
                       valueStyle={{ 
@@ -200,7 +204,7 @@ const SmartFarmDashboard = () => {
                       suffix="°C"
                       prefix={<FireOutlined />}
                       valueStyle={{ 
-                        // color: getStatusColor(deviceData.cpu_temp, { good: 60, warning: 70 }),
+                      color: getStatusColor(deviceData?.cpu_temp ?? 0, { good: 60, warning: 70 }),
                         fontSize: '32px',
                         fontWeight: 700
                       }}

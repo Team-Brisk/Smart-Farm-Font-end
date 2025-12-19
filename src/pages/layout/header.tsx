@@ -18,7 +18,7 @@ import { LocaleFormatter, useLocale } from '@/locales';
 import { setGlobalState } from '@/stores/global.store';
 import { setUserItem } from '@/stores/user.store';
 import auto from '@/assets/logo/auto.gif';
-
+import { logoutAsync } from '../../stores/user.action';
 import { loginAsync } from '../../stores/user.action';
 import HeaderNoticeComponent from './notice';
 
@@ -46,9 +46,9 @@ const HeaderComponent: FC<HeaderProps> = ({ collapsed, toggle }) => {
       case 'userSetting':
         return;
       case 'logout':
-        // const res = Boolean(await dispatch(logoutAsync()));
+        const res = Boolean(await dispatch(logoutAsync()));
 
-        // res && navigate('/login');
+        res && navigate('/login');
 
         return;
     }
@@ -64,8 +64,8 @@ const HeaderComponent: FC<HeaderProps> = ({ collapsed, toggle }) => {
   };
 
   const onChangeTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-
+    // const newTheme = theme === 'dark' ? 'light' : 'dark';
+const newTheme = theme === 'light' ? 'light' : 'light';
     localStorage.setItem('theme', newTheme);
     dispatch(
       setGlobalState({
@@ -105,6 +105,34 @@ const HeaderComponent: FC<HeaderProps> = ({ collapsed, toggle }) => {
               })}
             </span>
           </Tooltip>
+           <Dropdown
+              menu={{
+                items: [
+                  {
+                    key: '1',
+                    icon: <UserOutlined />,
+                    label: (
+                      <span onClick={() => navigate('users')}>
+                        <LocaleFormatter id="header.avator.account" />
+                      </span>
+                    ),
+                  },
+                  {
+                    key: '2',
+                    icon: <LogoutOutlined />,
+                    label: (
+                      <span onClick={() => onActionClick('logout')}>
+                        <LocaleFormatter id="header.avator.logout" />
+                      </span>
+                    ),
+                  },
+                ],
+              }}
+            >
+              <span className="user-action">
+  <UserOutlined  />
+</span>
+            </Dropdown>
           <HeaderNoticeComponent />
     
 

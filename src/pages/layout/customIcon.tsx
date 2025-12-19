@@ -17,7 +17,7 @@ export const CustomIcon: FC<CustomIconProps> = props => {
   const { type } = props;
   let com = <GuideSvg />;
  console.log(type)
-  if (type === 'devices') {
+  if (type === 'Devices') {
     com = <Device />;
   } else if (type === 'Reports') {
     com = <Reports />;
