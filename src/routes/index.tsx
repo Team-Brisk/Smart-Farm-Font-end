@@ -11,7 +11,6 @@ import LoginPage from '@/pages/login';
 
 import WrapperRouteComponent from './config';
 import UserPage from '@/pages/Management';
-import DatePickerPage from '@/pages/components/datePicker';
 
 const NotFound = lazy(() => import('@/pages/404'));
 const RuleChain = lazy(() => import('@/pages/rulechain'));
@@ -110,10 +109,6 @@ const routeList: RouteObject[] = [
       {
         path: 'component/tabs',
         element: <WrapperRouteComponent element={<TabsPage />} titleId="title.account" />,
-      },
-      {
-        path: 'component/datePicker',
-        element: <WrapperRouteComponent element={<DatePickerPage />} titleId="title.account" />,
       },
       {
         path: 'component/datePicker',
