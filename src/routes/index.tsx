@@ -22,6 +22,7 @@ const FormPage = lazy(() => import('@/pages/components/form'));
 const TablePage = lazy(() => import('@/pages/components/table'));
 const SearchPage = lazy(() => import('@/pages/components/search'));
 const TabsPage = lazy(() => import('@/pages/components/tabs'));
+const DatePickerPage = lazy(() => import('@/pages/components/datePicker'));
 const AsidePage = lazy(() => import('@/pages/components/aside'));
 const RadioCardsPage = lazy(() => import('@/pages/components/radio-cards'));
 const BusinessBasicPage = lazy(() => import('@/pages/business/basic'));
@@ -108,6 +109,10 @@ const routeList: RouteObject[] = [
       {
         path: 'component/tabs',
         element: <WrapperRouteComponent element={<TabsPage />} titleId="title.account" />,
+      },
+      {
+        path: 'component/datePicker',
+        element: <WrapperRouteComponent element={<DatePickerPage />} titleId="title.account" />,
       },
       {
         path: 'component/datePicker',
