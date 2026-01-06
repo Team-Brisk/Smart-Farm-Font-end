@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
-import { Table, Tooltip, Space, Checkbox, Typography, Tag, Button, Dropdown, Modal, Input, Upload, message, Spin } from 'antd';
+import {
+  Table,
+  Tooltip,
+  Space,
+  Checkbox,
+  Typography,
+  Tag,
+  Button,
+  Dropdown,
+  Modal,
+  Input,
+  Upload,
+  message,
+  Spin,
+} from 'antd';
 import {
   PlusOutlined,
   ReloadOutlined,
@@ -16,7 +30,7 @@ import {
   UploadOutlined,
   FileAddOutlined,
   CloseOutlined,
-  InboxOutlined
+  InboxOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -32,7 +46,7 @@ interface DashboardRow {
 const { Title } = Typography;
 
 const mockData = [
-   { key: 'SmartFarmDashboard', time: '2025-11-25 11:13:49', title: 'Smartfarm 1', public: false, customers: 0 },
+  { key: 'SmartFarmDashboard', time: '2025-11-25 11:13:49', title: 'Smartfarm 1', public: false, customers: 0 },
   { key: '2', time: '2025-09-30 16:44:36', title: 'Smartfarm 2', public: false, customers: 2 },
   { key: '3', time: '2025-09-08 09:50:18', title: 'Smartfarm.3', public: false, customers: 1 },
   { key: '4', time: '2025-08-26 13:12:18', title: 'Smartfarm 4', public: true, customers: 5 },
@@ -46,11 +60,11 @@ const DashboardList = () => {
   //State
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [isAddModalOpen, setAddModalOpen] = useState(false);
-  const [isImportModalOpen, setImportModalOpen] = useState(false)
+  const [isImportModalOpen, setImportModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   // Ant
-  const { Dragger } = Upload
+  const { Dragger } = Upload;
 
   // Function
   const rowSelection = {
@@ -69,7 +83,7 @@ const DashboardList = () => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-  }
+  };
 
   const uploadProps = {
     name: 'file',
@@ -102,11 +116,10 @@ const DashboardList = () => {
     {
       title: 'Title',
       dataIndex: 'title',
-          sorter: (a, b) => a.time.localeCompare(b.time),
-          
-         width: 220,
+      sorter: (a, b) => a.time.localeCompare(b.time),
+
+      width: 220,
       render: text => <span style={{ color: '#000000ff' }}>{text}</span>, // สีเทาสำหรับวันที่
-     
     },
     {
       title: 'Assigned to customers',
@@ -208,7 +221,7 @@ const DashboardList = () => {
               }}
             >
               <Button type="text" className="toolbar-btn" style={{ padding: 6 }}>
-                <PlusOutlined title='Add Dashboard' style={{ fontSize: 18 }} />
+                <PlusOutlined title="Add Dashboard" style={{ fontSize: 18 }} />
               </Button>
             </Dropdown>
 
@@ -229,14 +242,10 @@ const DashboardList = () => {
                 justifyContent: 'flex-end',
                 background: '#fff',
                 padding: '0px',
-                borderRadius: '0 0 0 0'
+                borderRadius: '0 0 0 0',
               }}
             >
-              <Input.Search
-                placeholder="Search dashboard…"
-                allowClear
-                style={{ width: 300 }}
-              />
+              <Input.Search placeholder="Search dashboard…" allowClear style={{ width: 300 }} />
             </div>
           </Space>
         </div>
@@ -258,13 +267,13 @@ const DashboardList = () => {
 
           <Space size="middle">
             <Button type="text" className="toolbar-btn" style={{ padding: 6 }}>
-              <ContactsOutlined title='Assign Dashboard' style={{ fontSize: 18, }} />
+              <ContactsOutlined title="Assign Dashboard" style={{ fontSize: 18 }} />
             </Button>
             <Button type="text" className="toolbar-btn" style={{ padding: 6 }}>
-              <UndoOutlined title='UnAssign Dashboard' style={{ fontSize: 18 }} />
+              <UndoOutlined title="UnAssign Dashboard" style={{ fontSize: 18 }} />
             </Button>
             <Button type="text" className="toolbar-btn" style={{ padding: 6 }}>
-              <DeleteOutlined title='Delete' style={{ fontSize: 18 }} />
+              <DeleteOutlined title="Delete" style={{ fontSize: 18 }} />
             </Button>
           </Space>
         </div>
@@ -287,26 +296,24 @@ const DashboardList = () => {
         />
       </div> */}
 
-
-      <Spin spinning={loading} style={{ backgroundColor: "#fff" }}>
+      <Spin spinning={loading} style={{ backgroundColor: '#fff' }}>
         <div style={{ background: '#fff', padding: '24px', borderRadius: '0px 0px 8px 8px' }}>
-         <Table
-  rowSelection={{ type: 'checkbox', ...rowSelection }}
-  columns={columns}
-  dataSource={mockData}
-  pagination={{
-    pageSize: 5,
-    showSizeChanger: true,
-    showTotal: total => `Total ${total} items`,
-  }}
-  className="custom-table"
-  onRow={(record) => ({
-    onClick: () => handleDashboardClick(record),
-  })}
-/>
+          <Table
+            rowSelection={{ type: 'checkbox', ...rowSelection }}
+            columns={columns}
+            dataSource={mockData}
+            pagination={{
+              pageSize: 5,
+              showSizeChanger: true,
+              showTotal: total => `Total ${total} items`,
+            }}
+            className="custom-table"
+            onRow={record => ({
+              onClick: () => handleDashboardClick(record),
+            })}
+          />
         </div>
       </Spin>
-
 
       {/* Modal Add Dashboard */}
       <Modal
@@ -318,32 +325,34 @@ const DashboardList = () => {
         centered
       >
         <div className="tb-modal-header">
-          <span style={{ fontSize: "26px", fontWeight: 500 }}>Add dashboard</span>
+          <span style={{ fontSize: '26px', fontWeight: 500 }}>Add dashboard</span>
           {/* <CloseOutlined onClick={() => setAddModalOpen(false)} className="tb-close" /> */}
         </div>
 
         <div className="tb-modal-body">
           <div className="tb-field">
-            <label style={{ fontSize: "16px" }}>Title*</label>
-            <Input placeholder="Dashboard Title" style={{ marginBottom: "12px" }} />
+            <label style={{ fontSize: '16px' }}>Title*</label>
+            <Input placeholder="Dashboard Title" style={{ marginBottom: '12px' }} />
           </div>
 
           <div className="tb-field">
-            <label style={{ fontSize: "16px" }}>Description</label>
-            <Input.TextArea rows={3} placeholder="Description" style={{ marginBottom: "12px" }} />
+            <label style={{ fontSize: '16px' }}>Description</label>
+            <Input.TextArea rows={3} placeholder="Description" style={{ marginBottom: '12px' }} />
           </div>
 
           <div className="tb-field">
-            <label style={{ fontSize: "16px" }}>Assigned customers</label>
-            <Input placeholder="Assign customers" style={{ marginBottom: "12px" }} />
+            <label style={{ fontSize: '16px' }}>Assigned customers</label>
+            <Input placeholder="Assign customers" style={{ marginBottom: '12px' }} />
           </div>
 
-          <div className="tb-section-title" style={{ marginBottom: "12px", fontSize: "16px" }}>Mobile application settings</div>
+          <div className="tb-section-title" style={{ marginBottom: '12px', fontSize: '16px' }}>
+            Mobile application settings
+          </div>
 
-          <Checkbox style={{ marginBottom: "12px", fontSize: "16px" }}>Hide dashboard in mobile application</Checkbox>
+          <Checkbox style={{ marginBottom: '12px', fontSize: '16px' }}>Hide dashboard in mobile application</Checkbox>
 
           <div className="tb-field">
-            <Input placeholder="Dashboard order in mobile application" style={{ marginBottom: "12px" }} />
+            <Input placeholder="Dashboard order in mobile application" style={{ marginBottom: '12px' }} />
           </div>
 
           {/* <div className="tb-section-title">Dashboard image</div>
@@ -353,7 +362,10 @@ const DashboardList = () => {
             <div className="tb-image-card">Set link</div>
           </div> */}
 
-          <div className="tb-footer" style={{ display: 'flex', justifyContent: "flex-end", gap: "10px", marginTop: "14px" }}>
+          <div
+            className="tb-footer"
+            style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '14px' }}
+          >
             <Button onClick={() => setAddModalOpen(false)}>Cancel</Button>
             <Button type="primary">Add</Button>
           </div>
@@ -361,7 +373,8 @@ const DashboardList = () => {
       </Modal>
 
       {/* Modal Import Dashboard */}
-      <Modal open={isImportModalOpen}
+      <Modal
+        open={isImportModalOpen}
         onCancel={() => setImportModalOpen(false)}
         footer={null}
         width={600}
@@ -369,27 +382,24 @@ const DashboardList = () => {
         centered
       >
         <div className="tb-modal-header">
-          <span style={{ fontSize: "26px", fontWeight: 500 }}>Import dashboard</span>
+          <span style={{ fontSize: '26px', fontWeight: 500 }}>Import dashboard</span>
           {/* <CloseOutlined onClick={() => setAddModalOpen(false)} className="tb-close" /> */}
         </div>
 
         <div className="tb-modal-body">
           <div className="tb-field">
-            <label className="tb-label" style={{ fontSize: "16px" }}>Dashboard file*</label>
+            <label className="tb-label" style={{ fontSize: '16px' }}>
+              Dashboard file*
+            </label>
 
             {/* Drag & Drop Upload Component */}
             <Dragger {...uploadProps} style={{ padding: 20 }}>
               <p className="ant-upload-drag-icon">
-                <InboxOutlined style={{ color: "#1677ff" }} />
+                <InboxOutlined style={{ color: '#1677ff' }} />
               </p>
-              <p className="ant-upload-text">
-                Click or drag file to this area to upload
-              </p>
-              <p className="ant-upload-hint">
-                Support for single dashboard import. Only JSON files are allowed.
-              </p>
+              <p className="ant-upload-text">Click or drag file to this area to upload</p>
+              <p className="ant-upload-hint">Support for single dashboard import. Only JSON files are allowed.</p>
             </Dragger>
-
           </div>
           <div className="tb-footer" style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '24px' }}>
             <Button onClick={() => setImportModalOpen(false)}>Cancel</Button>

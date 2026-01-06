@@ -11,7 +11,6 @@ import LoginPage from '@/pages/login';
 
 import WrapperRouteComponent from './config';
 import UserPage from '@/pages/Management';
-import DatePickerPage from '@/pages/components/datePicker';
 
 const NotFound = lazy(() => import('@/pages/404'));
 const RuleChain = lazy(() => import('@/pages/rulechain'));
@@ -23,6 +22,7 @@ const FormPage = lazy(() => import('@/pages/components/form'));
 const TablePage = lazy(() => import('@/pages/components/table'));
 const SearchPage = lazy(() => import('@/pages/components/search'));
 const TabsPage = lazy(() => import('@/pages/components/tabs'));
+const DatePickerPage = lazy(() => import('@/pages/components/datePicker'));
 const AsidePage = lazy(() => import('@/pages/components/aside'));
 const RadioCardsPage = lazy(() => import('@/pages/components/radio-cards'));
 const BusinessBasicPage = lazy(() => import('@/pages/business/basic'));
