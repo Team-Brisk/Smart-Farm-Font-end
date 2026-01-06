@@ -68,10 +68,20 @@ const LayoutPage: FC = () => {
     const { status, result } = await getMenuList();
 
     if (status) {
-      setMenuList(result);
+       const userStr = localStorage.getItem('user');
+    const userObj = userStr ? JSON.parse(userStr) : null;
+    const userRole = userObj?.role;
+     const filteredMenu = result.filter(menu => {
+      // ถ้าไม่มี role = แสดงได้ทุกคน
+      if (!menu.role) return true;
+
+      // ถ้ามี role ให้ compare
+      return menu.role === userRole;
+    });
+      setMenuList(filteredMenu);
       dispatch(
         setUserItem({
-          menuList: initMenuListAll(result),
+          menuList: initMenuListAll(filteredMenu),
         }),
       );
     }

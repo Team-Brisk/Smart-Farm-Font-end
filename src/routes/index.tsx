@@ -11,6 +11,7 @@ import LoginPage from '@/pages/login';
 
 import WrapperRouteComponent from './config';
 import UserPage from '@/pages/Management';
+import DatePickerPage from '@/pages/components/datePicker';
 
 const NotFound = lazy(() => import('@/pages/404'));
 const RuleChain = lazy(() => import('@/pages/rulechain'));
@@ -48,7 +49,7 @@ const PrivateRoute = ({ element }: { element: JSX.Element }) => {
 const routeList: RouteObject[] = [
   {
     path: '/',
-    element: <Navigate to="/login" replace />, // 👉 เข้าเว็บจะไป login ก่อน
+    element: <Navigate to="/login" replace />, // 
   },
   {
     path: '/login',

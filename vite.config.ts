@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react';
-import path from 'path';
+import path, { resolve } from 'path';
 import { defineConfig } from 'vite';
 import vitePluginImp from 'vite-plugin-imp';
 import svgrPlugin from 'vite-plugin-svgr';
@@ -9,7 +9,12 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.join(__dirname, 'src'),
+       buffer: resolve(__dirname, "node_modules/buffer/")
     },
+  },
+  define: {
+    'process.env': {},
+    global: "window",
   },
   server: {
     port: 8889,
@@ -22,6 +27,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    
     react({
       jsxImportSource: '@emotion/react',
       babel: {
