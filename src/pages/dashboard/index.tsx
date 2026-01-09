@@ -46,8 +46,8 @@ interface DashboardRow {
 const { Title } = Typography;
 
 const mockData = [
-  { key: 'SmartFarmDashboard', time: '2025-11-25 11:13:49', title: 'Smartfarm 1', public: false, customers: 0 },
-  { key: '2', time: '2025-09-30 16:44:36', title: 'Smartfarm 2', public: false, customers: 2 },
+   { key: 'SmartFarmDashboard', time: '2025-11-25 11:13:49', title: 'Smartfarm 1', public: false, customers: 0 },
+  { key: 'SmartFarmDashboard2', time: '2025-09-30 16:44:36', title: 'Smartfarm 2', public: false, customers: 2 },
   { key: '3', time: '2025-09-08 09:50:18', title: 'Smartfarm.3', public: false, customers: 1 },
   { key: '4', time: '2025-08-26 13:12:18', title: 'Smartfarm 4', public: true, customers: 5 },
   { key: '5', time: '2025-08-13 14:31:32', title: 'Smartfarm 5', public: false, customers: 0 },
