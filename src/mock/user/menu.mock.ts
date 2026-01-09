@@ -5,7 +5,7 @@ import { loginApi } from '@/api/auth';
 const userStr = localStorage.getItem('user');
 const userObj = userStr ? JSON.parse(userStr) : null;
 const userRole = userObj?.role;
-console.log(userRole)
+console.log('userRole',userRole)
 
 const mockMenuList: MenuList = [
   {
@@ -132,5 +132,12 @@ const mockMenuList: MenuList = [
     ],
   },
 ];
+const filteredMenuList = mockMenuList.filter(menu => {
+  // 1. ถ้าเมนูไม่มีการกำหนด role ไว้ ให้แสดงผลได้เลย (Public menu)
+  if (!menu.role) return true;
+  
+  // 2. ถ้ามีการกำหนด role ให้เช็คว่าตรงกับ userRole หรือไม่
+  return menu.role === userRole;
+});
 
-mock.mock('/user/menu', 'get', intercepter(mockMenuList));
+mock.mock('/user/menu', 'get', intercepter(filteredMenuList));

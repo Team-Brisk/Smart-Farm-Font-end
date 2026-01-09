@@ -18,6 +18,7 @@ const RuleChain = lazy(() => import('@/pages/rulechain'));
 const Devices = lazy(() => import('@/pages/devices'));
 const Reports = lazy(() => import('@/pages/reports'));
 const SmartDash1 = lazy(() => import('@/pages/dashboard/SmartFarmDashboard'));
+const SmartDash2 = lazy(() => import('@/pages/dashboard/SmartFarmDashboard2'));
 const RoutePermission = lazy(() => import('@/pages/permission/route'));
 const FormPage = lazy(() => import('@/pages/components/form'));
 const TablePage = lazy(() => import('@/pages/components/table'));
@@ -71,6 +72,10 @@ const routeList: RouteObject[] = [
       {
         path: 'dashboard/SmartFarmDashboard',
         element: <WrapperRouteComponent element={<SmartDash1 />} titleId="title.dashboard" />,
+      },
+       {
+        path: 'dashboard/SmartFarmDashboard2',
+        element: <WrapperRouteComponent element={<SmartDash2 />} titleId="title.dashboard" />,
       },
       {
         path: 'rulechain',
