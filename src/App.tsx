@@ -29,17 +29,16 @@ const App: React.FC = () => {
 
   /** initial theme */
   useEffect(() => {
-    setTheme(theme === 'dark');
+    setTheme(theme === 'light');
 
     // watch system theme change
     if (!localStorage.getItem('theme')) {
-      const mql = window.matchMedia('(prefers-color-scheme: dark)');
-
+    
       function matchMode(e: MediaQueryListEvent) {
         setTheme(e.matches);
       }
 
-      mql.addEventListener('change', matchMode);
+    
     }
   }, []);
 
@@ -71,7 +70,7 @@ const App: React.FC = () => {
       locale={getAntdLocale()}
       componentSize="middle"
       theme={{
-        token: { colorPrimary: '#13c2c2' },
+        token: { colorPrimary: '#ff7b00ff' },
         algorithm: theme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
       }}
     >

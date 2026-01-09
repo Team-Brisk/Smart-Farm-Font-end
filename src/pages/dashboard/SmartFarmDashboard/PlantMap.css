@@ -1,0 +1,46 @@
+.plant-map-wrapper {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    max-width: 420px;
+}
+
+.plant-map {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.plot-cell {
+    aspect-ratio: 1 / 1;
+    background: #f1f5f9;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #334155;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.plot-cell:hover {
+    background: #e0f2fe;
+    border-color: #38bdf8;
+}
+
+.plot-cell.active {
+    background: #38bdf8;
+    color: #ffffff;
+    border-color: #0284c7;
+}
+
+.selected-info {
+    margin-top: 16px;
+    font-size: 14px;
+    color: #334155;
+}

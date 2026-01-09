@@ -1,0 +1,131 @@
+.page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f0fdf4, #eff6ff);
+    padding: 32px;
+    font-family: sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.header h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #166534;
+}
+
+.header p {
+    color: #555;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .1);
+}
+
+/* Plant Visualization */
+.plant-area {
+    height: 380px;
+    background: linear-gradient(to bottom, #bae6fd, #bbf7d0);
+    border-radius: 12px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
+}
+
+.soil {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to top, #78350f, #b45309);
+}
+
+.tree {
+    transition: all 1s ease;
+}
+
+.trunk {
+    width: 12px;
+    background: linear-gradient(to right, #92400e, #b45309);
+    margin: auto;
+    border-radius: 6px;
+}
+
+.leaves {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.leaf {
+    position: absolute;
+    width: 60px;
+    height: 80px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: pulse 3s infinite;
+}
+
+.leaf.left {
+    left: -60px;
+    transform: rotate(-30deg);
+}
+
+.leaf.center {
+    left: -30px;
+    top: -20px;
+    background: #16a34a;
+}
+
+.leaf.right {
+    left: 10px;
+    transform: rotate(30deg);
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.plant-area {
+    height: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+}
+
+.soil {
+    position: absolute;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+    background: #78350f;
+}

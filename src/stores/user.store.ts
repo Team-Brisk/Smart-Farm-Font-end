@@ -14,7 +14,7 @@ const initialState: UserState = {
   logged: localStorage.getItem('t') ? true : false,
   menuList: [],
   username: localStorage.getItem('username') || '',
-  role: (localStorage.getItem('username') || '') as Role,
+  role: (localStorage.getItem('role') || '') as Role,
 };
 
 const userSlice = createSlice({
