@@ -1,24 +1,24 @@
 import type { FC } from 'react';
-import type { RouteObject } from 'react-router';
+import type { RouteObject } from 'react-router-dom';
 
 import { lazy } from 'react';
-import { Navigate } from 'react-router';
-import { useRoutes } from 'react-router-dom';
+import { Navigate, useRoutes } from 'react-router-dom';
 
 import Dashboard from '@/pages/dashboard';
 import LayoutPage from '@/pages/layout';
 import LoginPage from '@/pages/login';
-
-import WrapperRouteComponent from './config';
 import UserPage from '@/pages/Management';
 
+import WrapperRouteComponent from './config';
+
+// lazy pages
 const NotFound = lazy(() => import('@/pages/404'));
 const RuleChain = lazy(() => import('@/pages/rulechain'));
 const Devices = lazy(() => import('@/pages/devices'));
 const Reports = lazy(() => import('@/pages/reports'));
 const SmartDash1 = lazy(() => import('@/pages/dashboard/SmartFarmDashboard'));
 const SmartDash2 = lazy(() => import('@/pages/dashboard/SmartFarmDashboard2'));
-const RoutePermission = lazy(() => import('@/pages/permission/route'));
+// const RoutePermission = lazy(() => import('@/pages/permission/route'));
 const FormPage = lazy(() => import('@/pages/components/form'));
 const TablePage = lazy(() => import('@/pages/components/table'));
 const SearchPage = lazy(() => import('@/pages/components/search'));
@@ -26,21 +26,19 @@ const TabsPage = lazy(() => import('@/pages/components/tabs'));
 const DatePickerPage = lazy(() => import('@/pages/components/datePicker'));
 const AsidePage = lazy(() => import('@/pages/components/aside'));
 const RadioCardsPage = lazy(() => import('@/pages/components/radio-cards'));
-const BusinessBasicPage = lazy(() => import('@/pages/business/basic'));
-const BusinessWithSearchPage = lazy(() => import('@/pages/business/with-search'));
-const BusinessWithAsidePage = lazy(() => import('@/pages/business/with-aside'));
-const BusinessWithRadioCardsPage = lazy(() => import('@/pages/business/with-radio-cards'));
-const BusinessWithTabsPage = lazy(() => import('@/pages/business/with-tabs'));
+
 
 // -------------------------
-// Route Guard
+// PrivateRoute (v6)
 // -------------------------
-const PrivateRoute = ({ element }: { element: JSX.Element }) => {
+const PrivateRoute: FC<{ children: React.ReactNode }> = ({ children }) => {
   const token = localStorage.getItem('token');
+
   if (!token) {
     return <Navigate to="/login" replace />;
   }
-  return element;
+
+  return <>{children}</>;
 };
 
 // -------------------------
@@ -49,129 +47,144 @@ const PrivateRoute = ({ element }: { element: JSX.Element }) => {
 const routeList: RouteObject[] = [
   {
     path: '/',
-    element: <Navigate to="/login" replace />, // 
+    element: <Navigate to="/login" replace />,
   },
   {
     path: '/login',
-    element: <WrapperRouteComponent element={<LoginPage />} titleId="title.login" />,
+    element: (
+      <WrapperRouteComponent titleId="title.login">
+        <LoginPage />
+      </WrapperRouteComponent>
+    ),
   },
   {
-    path: '/', // ใช้ path อื่นเพื่อป้องกันชนกับ redirect
+    path: '/',
     element: (
-      <PrivateRoute element={<WrapperRouteComponent element={<LayoutPage />} titleId="" />} />
+      <PrivateRoute>
+        <WrapperRouteComponent auth>
+          <LayoutPage />
+        </WrapperRouteComponent>
+      </PrivateRoute>
     ),
     children: [
-      {
-        path: '',
-        element: <Navigate to="dashboard" />,
-      },
+      { index: true, element: <Navigate to="dashboard" replace /> },
+
       {
         path: 'dashboard',
-        element: <WrapperRouteComponent element={<Dashboard />} titleId="title.dashboard" />,
+        element: (
+          <WrapperRouteComponent titleId="title.dashboard">
+            <Dashboard />
+          </WrapperRouteComponent>
+        ),
       },
       {
         path: 'dashboard/SmartFarmDashboard',
-        element: <WrapperRouteComponent element={<SmartDash1 />} titleId="title.dashboard" />,
+        element: (
+          <WrapperRouteComponent titleId="title.dashboard">
+            <SmartDash1 />
+          </WrapperRouteComponent>
+        ),
       },
-       {
+      {
         path: 'dashboard/SmartFarmDashboard2',
-        element: <WrapperRouteComponent element={<SmartDash2 />} titleId="title.dashboard" />,
+        element: (
+          <WrapperRouteComponent titleId="title.dashboard">
+            <SmartDash2 />
+          </WrapperRouteComponent>
+        ),
       },
       {
         path: 'rulechain',
-        element: <WrapperRouteComponent element={<RuleChain />} titleId="title.RuleChain" />,
+        element: (
+          <WrapperRouteComponent titleId="title.RuleChain">
+            <RuleChain />
+          </WrapperRouteComponent>
+        ),
       },
       {
         path: 'devices',
-        element: <WrapperRouteComponent element={<Devices />} titleId="title.Devices" />,
+        element: (
+          <WrapperRouteComponent titleId="title.Devices">
+            <Devices />
+          </WrapperRouteComponent>
+        ),
       },
       {
         path: 'reports',
-        element: <WrapperRouteComponent element={<Reports />} titleId="title.Reports" />,
+        element: (
+          <WrapperRouteComponent titleId="title.Reports">
+            <Reports />
+          </WrapperRouteComponent>
+        ),
       },
       {
         path: 'users',
-  element: <WrapperRouteComponent element={<UserPage />} titleId="title.Users" />,  
-      },
-      {
-        path: 'permission/route',
         element: (
-          <WrapperRouteComponent element={<RoutePermission />} titleId="title.permission.route" />
+          <WrapperRouteComponent titleId="title.Users">
+            <UserPage />
+          </WrapperRouteComponent>
         ),
       },
+      // {
+      //   path: 'permission/route',
+      //   element: (
+      //     <WrapperRouteComponent titleId="title.permission.route">
+      //       <RoutePermission />
+      //     </WrapperRouteComponent>
+      //   ),
+      // },
+
+      // components
       {
         path: 'component/form',
-        element: <WrapperRouteComponent element={<FormPage />} titleId="title.account" />,
+        element: (
+          <WrapperRouteComponent titleId="title.account">
+            <FormPage />
+          </WrapperRouteComponent>
+        ),
       },
       {
         path: 'component/table',
-        element: <WrapperRouteComponent element={<TablePage />} titleId="title.account" />,
+        element: (
+          <WrapperRouteComponent titleId="title.account">
+            <TablePage />
+          </WrapperRouteComponent>
+        ),
       },
       {
         path: 'component/search',
-        element: <WrapperRouteComponent element={<SearchPage />} titleId="title.account" />,
+        element: (
+          <WrapperRouteComponent titleId="title.account">
+            <SearchPage />
+          </WrapperRouteComponent>
+        ),
       },
       {
         path: 'component/tabs',
-        element: <WrapperRouteComponent element={<TabsPage />} titleId="title.account" />,
-      },
-      {
-        path: 'component/datePicker',
-        element: <WrapperRouteComponent element={<DatePickerPage />} titleId="title.account" />,
-      },
-      {
-        path: 'component/aside',
-        element: <WrapperRouteComponent element={<AsidePage />} titleId="title.account" />,
-      },
-      {
-        path: 'component/radio-cards',
-        element: <WrapperRouteComponent element={<RadioCardsPage />} titleId="title.account" />,
-      },
-      {
-        path: 'business/basic',
-        element: <WrapperRouteComponent element={<BusinessBasicPage />} titleId="title.account" />,
-      },
-      {
-        path: 'business/with-search',
         element: (
-          <WrapperRouteComponent
-            element={<BusinessWithSearchPage />}
-            titleId="title.account"
-          />
+          <WrapperRouteComponent titleId="title.account">
+            <TabsPage />
+          </WrapperRouteComponent>
         ),
       },
-      {
-        path: 'business/with-aside',
-        element: (
-          <WrapperRouteComponent element={<BusinessWithAsidePage />} titleId="title.account" />
-        ),
-      },
-      {
-        path: 'business/with-radio-cards',
-        element: (
-          <WrapperRouteComponent
-            element={<BusinessWithRadioCardsPage />}
-            titleId="title.account"
-          />
-        ),
-      },
-      {
-        path: 'business/with-tabs',
-        element: <WrapperRouteComponent element={<BusinessWithTabsPage />} titleId="title.account" />,
-      },
+
+      // business
+     
       {
         path: '*',
-        element: <WrapperRouteComponent element={<NotFound />} titleId="title.notFount" />,
+        element: (
+          <WrapperRouteComponent titleId="title.notFound">
+            <NotFound />
+          </WrapperRouteComponent>
+        ),
       },
-      
-      
     ],
   },
 ];
 
+// -------------------------
 const RenderRouter: FC = () => {
-  const element = useRoutes(routeList);
-  return element;
+  return useRoutes(routeList);
 };
 
 export default RenderRouter;
