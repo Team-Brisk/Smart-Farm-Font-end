@@ -979,24 +979,24 @@ export default function SmartFarmControl() {
   };
   //-------------------take photo ----------------------------//
   const onCaptureImage = async () => {
-     if (!cameraState) return;
+    if (!cameraState) return;
 
-  try {
-    await fetch("http://localhost:5000/api/allRoutes/set-attribute/cam1", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        key: "camera_picture_topview_A",
-        value: "rtsp://191.20.110.189:8554/cam_topview"
-      })
-    });
+    try {
+      await fetch("http://localhost:5000/api/allRoutes/set-attribute/cam1", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          key: "camera_picture_topview_A",
+          value: "rtsp://191.20.110.189:8554/cam_topview"
+        })
+      });
 
-    message.success("Camera picture source set");
-  } catch (err) {
-    console.error(err);
-    message.error("Failed to set camera picture");
-  }
-};
+      message.success("Camera picture source set");
+    } catch (err) {
+      console.error(err);
+      message.error("Failed to set camera picture");
+    }
+  };
   const toggleService = async ({
     checked,
     keyName,
@@ -1645,7 +1645,7 @@ export default function SmartFarmControl() {
               />
 
               <Button
-               className="custom-move-btn"
+                className="custom-move-btn"
                 type="primary"
                 icon={<CameraOutlined />}
                 onClick={onCaptureImage}
@@ -2471,30 +2471,44 @@ export default function SmartFarmControl() {
                 { key: "moveCorrectGripperS", label: "Return Soil", color: "#87d068" },
                 { key: "moveGripperW", label: "Get Water", color: "#2db7f5" },
                 { key: "moveCorrectGripperW", label: "Return Water", color: "#2db7f5" },
-              ].map((item) => (
-                <div key={item.key} style={{ width: "100%" }}>
-                  <Button
-                    className="custom-hover-btn" // เพิ่ม className
-                    type="primary"
-                    shape="round"
-                    size="large"
-                    icon={<PlayCircleOutlined />}
-                    disabled={isMoving || isEmergency || manualState}
-                    onClick={() => handleMoveGripper(item.key)} // หรือเปลี่ยน Function ตามการใช้งานจริง
-                    style={{
-                      width: "100%",
-                      height: "45px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      backgroundColor: isMoving || isEmergency || manualState ? undefined : item.color,
-                      borderColor: isMoving || isEmergency || manualState ? undefined : item.color,
-                    }}
-                  >
-                    <span style={{ fontWeight: "bold" }}>{item.label}</span>
-                  </Button>
-                </div>
-              ))}
+              ].map((item) => {
+                // 1. เช็กว่าเป็นปุ่มประเภท Return หรือไม่ (ดูจาก key ที่มีคำว่า Correct)
+                const isReturnButton = item.key.includes("Correct");
+
+                // 2. เช็กสถานะว่าไม่มี Gripper หรือไม่
+                const noGripper = currentStatus === "No Gripper For Collection";
+
+                // 3. รวมเงื่อนไขการ Disable:
+                // - เงื่อนไขเดิม: isMoving || isEmergency || manualState
+                // - เงื่อนไขใหม่: ถ้าเป็นปุ่ม Return และไม่มี Gripper ให้ Disable เพิ่มด้วย
+                const isDisabled = isMoving || isEmergency || manualState || (isReturnButton && noGripper);
+
+                return (
+                  <div key={item.key} style={{ width: "100%" }}>
+                    <Button
+                      className="custom-hover-btn"
+                      type="primary"
+                      shape="round"
+                      size="large"
+                      icon={<PlayCircleOutlined />}
+                      disabled={isDisabled} // ใช้ตัวแปร isDisabled ที่คำนวณไว้
+                      onClick={() => handleMoveGripper(item.key)}
+                      style={{
+                        width: "100%",
+                        height: "45px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        // ถ้า Disabled ให้ใช้สีมาตรฐานของ Ant Design (undefined) ถ้าไม่ให้ใช้สีที่กำหนด
+                        backgroundColor: isDisabled ? undefined : item.color,
+                        borderColor: isDisabled ? undefined : item.color,
+                      }}
+                    >
+                      <span style={{ fontWeight: "bold" }}>{item.label}</span>
+                    </Button>
+                  </div>
+                );
+              })}
             </div>
 
             {/* --- ขีดเส้นคั่นเบาๆ (ถ้าต้องการ) --- */}
@@ -2618,6 +2632,41 @@ export default function SmartFarmControl() {
             </div>
           </Card>
         </Col>
+      </Row>
+       <Row gutter={[24, 24]} style={{ alignItems: 'stretch' }}> {/* alignItems: stretch ช่วยให้ Col สูงเท่ากัน */}
+
+        {/*----------------------------- move location -----------------------*/}
+        <Col xs={96} sm={48} md={24}>
+         <Card 
+      hoverable 
+      style={{ 
+        borderRadius: 15, 
+        height: '150%', 
+        overflow: 'hidden', // กัน iframe ล้นขอบ Card
+        padding: 0 // ลด padding เพื่อให้ iframe เต็มพื้นที่
+      }}
+      bodyStyle={{ padding: 0, height: '100%' }} // บังคับให้ body ของ card สูงเต็ม
+    >
+      <div style={{ padding: '16px 24px', borderBottom: '1px solid #f0f0f0' }}>
+        <Title level={4} style={{ margin: 0 }}>
+          <VideoCameraOutlined /> Live Stream / Monitoring
+        </Title>
+      </div>
+      
+      <div style={{ width: '100%', height: 'calc(100% - 55px)', minHeight: '400px' }}>
+        <iframe
+          src="http://191.20.208.7:5010/"
+          title="Robot Monitoring"
+          style={{
+            width: '100%',
+            height: '100%',
+            border: 'none',
+          }}
+          allowFullScreen
+        />
+      </div>
+    </Card>
+  </Col>
       </Row>
     </div>
   );
